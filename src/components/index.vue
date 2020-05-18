@@ -50,7 +50,7 @@
                   <el-dropdown-item>删除</el-dropdown-item>
                 </el-dropdown-menu>
               </el-dropdown>
-              <span>{{getUser.nikeName}}</span>
+              <span>{{nikeName}}</span>
           </el-col>
         </el-row>
       </el-header>
@@ -132,10 +132,12 @@ export default {
       },
       meuns: meuns1,
       menusHead: menusHead,
-      width: '200px'
+      width: '200px',
+      nikeName: ''
     }
   },
   mounted: function () {
+    // window.addEventListener('beforeunload', this.initMenuAndUser)
     this.initMenuAndUser()
   },
   methods: {
@@ -161,9 +163,14 @@ export default {
       }
     },
     initMenuAndUser () {
-      this.$http.get('/vue/index?userKey=' + this.getUserKey)
+      console.log('3333333333333')
+      this.$http.get('vue/index?userKey=' + this.getUserKey)
         .then(response => {
-          this.$store.dispatch('addUser', response.data.data.sUserInfo)
+          var curUser = response.data.data.sUserInfo
+          this.$store.dispatch('addUser', curUser)
+          if (curUser != null && curUser.nikeName != null) {
+            this.nikeName = curUser.nikeName
+          }
         })
         // eslint-disable-next-line handle-callback-err
         .catch(function (error) {

@@ -109,7 +109,7 @@ export default {
               if (data.code == 200) {
                 // 将人员登录key放入vuex维护
                 this.$store.dispatch('addUserKey', userKey)
-                this.$router.push('index')
+                this.$router.push('homePage')
               } else {
                 this.$message.error(data.message)
                 this.initCode()

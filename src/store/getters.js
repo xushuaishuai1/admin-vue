@@ -15,9 +15,17 @@ export default {
     return state.loading
   },
   getUserKey (state) {
-    return state.userKey
+    var userKey = state.userKey
+    if (userKey == null) {
+      userKey = sessionStorage.getItem('userKey')
+    }
+    return userKey
   },
   getUser (state) {
-    return state.user
+    var user = state.user
+    if (user == null) {
+      user = sessionStorage.getItem('user')
+    }
+    return user
   }
 }

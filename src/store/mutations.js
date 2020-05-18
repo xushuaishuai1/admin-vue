@@ -31,9 +31,11 @@ const mutations = {
     state.loading = false
   },
   [ADDUSERKEY] (state, data) {
+    sessionStorage.setItem('userKey', data)
     state.userKey = data
   },
   [ADDUSER] (state, data) {
+    sessionStorage.setItem('user', data)
     state.user = data
   }
 }

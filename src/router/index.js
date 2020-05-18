@@ -9,7 +9,7 @@ import component1 from '@/components/learn/component1'
 import transition from '@/components/learn/transition'
 import transition1 from '@/components/learn/transition1'
 import notFoundPage from '@/components/common/404'
-import Index from '@/components/index'
+import homePage from '@/components/index'
 import ownComponentUse from '@/components/learn/ownComponentUse'
 import vuexLearn from '@/components/learn/vuexLearn'
 import commonForm from '@/components/learn/commonForm'
@@ -29,8 +29,8 @@ const routes = [
     redirect: '/notFoundPage'// 重定向
   },
   {
-    path: '/index',
-    component: Index,
+    path: '/homePage',
+    component: homePage,
     children: [
       {
         path: '/notFoundPage',
@@ -92,7 +92,7 @@ const routes = [
 ]
 
 const router = new VueRouter({
-  mode: 'history',
+  // mode: 'history',
   base: process.env.BASE_URL,
   // 放了这个属性，打包后页面内容为空
   // mode:'history',
