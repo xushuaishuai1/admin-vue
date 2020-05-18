@@ -59,9 +59,9 @@
       </el-header>
 
       <el-main>
-        <transition enter-active-class="bounceInLeft" leave-active-class="bounceOutRight">
-          <router-view class="animated"></router-view>
-        </transition>
+        <!-- <transition name="el-zoom-in-bottom"> -->
+          <router-view ></router-view>
+        <!-- </transition> -->
       </el-main>
     </el-container>
   </el-container>
@@ -99,6 +99,13 @@
   text-align: right;
   font-size: 12px;
   color: #fff;
+}
+
+.fade-enter-active, .fade-leave-active {
+  transition: opacity .5s;
+}
+.fade-enter, .fade-leave-to /* .fade-leave-active below version 2.1.8 */ {
+  opacity: 0;
 }
 </style>
 
