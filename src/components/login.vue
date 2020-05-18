@@ -1,8 +1,8 @@
 <template>
   <div>
     <el-container>
-      <el-header style="width: 100%;height: 60px;line-height: 60px">
-        <div style="cursor: pointer;color: #0BA1DC;font-family: 微软雅黑;font-size:23px;padding-left: 5%;" >
+      <el-header style="width: 100%;height: 60px;line-height: 60px;background-color:white">
+        <div style="cursor: pointer;color: #0BA1DC;font-family: 微软雅黑;font-size:23px;padding-left: 5%;float:left;" >
           <img :src="require('../assets/images/logo1.png')" style="width:36px;height:24px;margin-bottom:-3px;"/> &nbsp;<span>高校档案系统</span>
         </div>
       </el-header>
