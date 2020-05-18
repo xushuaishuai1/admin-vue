@@ -1,6 +1,9 @@
 <template>
   <el-container style="height:calc(100vh);">
     <el-aside :style="asidewidth">
+      <div class="sidebar-logo-container" title="高校档案系统">
+          <img :src="require('../assets/images/logo1.png')"> &nbsp;<span v-show="!isCollapse">高校档案系统</span>
+    </div>
       <el-menu
         class="el-menu-vertical-demo"
         @open="handleOpen"
@@ -82,6 +85,18 @@
   font-size: 12px;
   color: #fff;
 }
+.sidebar-logo-container {
+  position: relative;
+  width: 100%;
+  text-align: center;
+  overflow: hidden;
+  color: white;
+  font-size: 21px;
+  padding: 0;
+  line-height: 62px;
+  height: 62px;
+  transition: height 0.8s cubic-bezier(0.075, 0.82, 0.165, 1)
+  }
 </style>
 
 <script>
@@ -125,7 +140,7 @@ export default {
         width: '200px',
         height: 'calc(100vh)',
         'background-color': '#333',
-        transition: 'width 0.5s'
+        transition: 'width 0.15s'
       },
       rightStyle: {
         'background-color': '#e0e0e0'
