@@ -4,7 +4,7 @@
     <input type="text" v-model="message1" />
     <hr />
     {{new Date() | normalTime}}
-    <hr/>
+    <hr />
     <el-button @click="visible = true">Button</el-button>
     <el-dialog :visible.sync="visible" title="Hello world">
       <p>Try Element</p>
@@ -44,7 +44,7 @@
         </div>
       </el-collapse-transition>
     </div>
-    <hr/>
+    <hr />
     <div>
       <el-button :plain="true" @click="open1">消息</el-button>
       <el-button :plain="true" @click="open2">成功</el-button>
@@ -56,70 +56,70 @@
 
 <script type="text/javascript">
 export default {
-  //这里需要将模块引出，可在其他地方使用
-  name: "HelloVue1",
-  data() {
-    //注意：data即使不需要传数据，也必须return,否则会报错
+  // 这里需要将模块引出，可在其他地方使用
+  name: 'HelloVue1',
+  data () {
+    // 注意：data即使不需要传数据，也必须return,否则会报错
     return {
-      message1: "啦啦啦啦啦",
+      message1: '啦啦啦啦啦',
       visible: false,
       show: true,
       show2: true,
       show3: true
-    };
+    }
   },
   transitions: {
     bounce: {
-      enterClass: "zoomInLeft",
-      leaveClass: "zoomOutRight"
+      enterClass: 'zoomInLeft',
+      leaveClass: 'zoomOutRight'
     }
   },
-  //自定义过滤
+  // 自定义过滤
   filters: {
-    //可带参数
-    fiterHtml: function(input,a,b) {
-      return input.replace(/<[^<]+>/g, "")+"a="+a+"##b="+b;
+    // 可带参数
+    fiterHtml: function (input, a, b) {
+      return input.replace(/<[^<]+>/g, '') + 'a=' + a + '##b=' + b
     }
   },
-  //自定义指令
+  // 自定义指令
   directives: {
-    red: function(obj) {
-      obj.style.background = "white";
+    red: function (obj) {
+      obj.style.background = 'white'
     }
   },
   methods: {
-      open1() {
-        this.$message({
-          showClose: true,
-          message: '这是一条消息提示'
-        });
-      },
+    open1 () {
+      this.$message({
+        showClose: true,
+        message: '这是一条消息提示'
+      })
+    },
 
-      open2() {
-        this.$message({
-          showClose: true,
-          message: '恭喜你，这是一条成功消息',
-          type: 'success'
-        });
-      },
+    open2 () {
+      this.$message({
+        showClose: true,
+        message: '恭喜你，这是一条成功消息',
+        type: 'success'
+      })
+    },
 
-      open3() {
-        this.$message({
-          showClose: true,
-          message: '警告哦，这是一条警告消息',
-          type: 'warning'
-        });
-      },
+    open3 () {
+      this.$message({
+        showClose: true,
+        message: '警告哦，这是一条警告消息',
+        type: 'warning'
+      })
+    },
 
-      open4() {
-        this.$message({
-          showClose: true,
-          message: '错了哦，这是一条错误消息',
-          type: 'error'
-        });
-      }
+    open4 () {
+      this.$message({
+        showClose: true,
+        message: '错了哦，这是一条错误消息',
+        type: 'error'
+      })
     }
-};
+  }
+}
 </script>
 
 <style type="text/css">

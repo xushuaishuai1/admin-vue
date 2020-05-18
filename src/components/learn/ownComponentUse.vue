@@ -1,12 +1,10 @@
 <template>
-    <div>
-        <Loading></Loading>
-    </div>
+  <div>
+    <Loading></Loading>
+  </div>
 </template>
 <script>
 export default {
-    components:{
-
-    }
+  components: {}
 }
 </script>

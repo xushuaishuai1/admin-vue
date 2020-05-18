@@ -1,5 +1,5 @@
-import {normalTime} from './normalTime'
+import { normalTime } from './normalTime'
 
-export{
-    normalTime
+export {
+  normalTime
 }
