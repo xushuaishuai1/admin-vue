@@ -71,6 +71,18 @@
 .el-container{
   height:calc(100vh)
 }
+.sidebar-logo-container {
+  position: relative;
+  width: 100%;
+  text-align: center;
+  overflow: hidden;
+  color: #fff;
+  font-size: 1.2rem;
+  padding: 0;
+  line-height: 62px;
+  height: 62px;
+  transition: height 0.8s cubic-bezier(0.075, 0.82, 0.165, 1)
+  }
 .el-header {
   background-color: #333;
   line-height: 60px;
@@ -80,7 +92,7 @@
   color: #333;
 }
 .el-menu-vertical-demo:not(.el-menu--collapse) {
-  width: 200px;
+  width: 245px;
   min-height: 400px;
 }
 .el-header {
@@ -88,18 +100,6 @@
   font-size: 12px;
   color: #fff;
 }
-.sidebar-logo-container {
-  position: relative;
-  width: 100%;
-  text-align: center;
-  overflow: hidden;
-  color: white;
-  font-size: 21px;
-  padding: 0;
-  line-height: 62px;
-  height: 62px;
-  transition: height 0.8s cubic-bezier(0.075, 0.82, 0.165, 1)
-  }
 </style>
 
 <script>
@@ -140,7 +140,7 @@ export default {
     return {
       isCollapse: false,
       asidewidth: {
-        width: '200px',
+        width: '245px',
         height: 'calc(100vh)',
         'background-color': '#333',
         transition: 'width 0.15s'
@@ -150,7 +150,7 @@ export default {
       },
       meuns: meuns1,
       menusHead: menusHead,
-      width: '200px',
+      width: '245px',
       nikeName: '',
       iconClass: 'el-icon-s-fold'
     }
@@ -173,8 +173,8 @@ export default {
     setIsCollapse () {
       if (this.isCollapse) {
         this.isCollapse = false
-        this.asidewidth.width = '200px'
-        this.width = '200px'
+        this.asidewidth.width = '245px'
+        this.width = '245px'
         this.iconClass = 'el-icon-s-fold'
       } else {
         this.isCollapse = true
