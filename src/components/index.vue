@@ -45,6 +45,8 @@
             </el-menu>
           </el-col>
           <el-col :xs="7" :sm="7" :md="7" :lg="7" :xl="7">
+             &nbsp;现在数字为：{{getCount}},{{judgeOdd}}
+             <el-button type="primary" @click="changeMenu">切换到过滤器</el-button>
             <el-dropdown>
                 <i class="el-icon-setting" style="margin-right: 15px"></i>
                 <el-dropdown-menu slot="dropdown">
@@ -205,11 +207,27 @@ export default {
           this.$message.error('后台接口调用失败！')
           this.initCode()
         })
+    },
+    changeMenu () {
+      this.$router.push({ path: 'filter' })
+      // this.$router.push('filter');
+      // this.$router.push(path):相当于点击路由链接(可以返回到当前路由界面)
+      // this.$router.replace(path):用新路由替换当前路由(不可以返回到当前路由界面)
+      // this.$router.back(): 请求(返回)上一个记录路由
+
+      // 路由参数传递 获取 方法一
+      // 路由参数传递this.$router.push({name:"product‐list", query:{"name":val}});
+      // 路由参数获取let searchName = this.$route.query.name
+      // 路由参数传递 获取 方法二
+      // 路由定义{ path:'/product/:id', name:'product', component: ProductDetail }
+      // 模板使用<router‐link :to="{name:'product',params:{id:1}}">产品1连接</router‐link>
+      // 获取let id = this.$route.params.id;
     }
   },
   computed: mapGetters([
     'getUserKey',
-    'getUser'
+    'getUser',
+    'getCount', 'judgeOdd', 'loading'
   ])
 }
 </script>
