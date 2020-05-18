@@ -34,8 +34,7 @@
                                   <img class="codeimg" id="codeimg" v-bind:src="codeimgsrc" @click="initCode"/>
                             </el-col>
                       </el-row>
-                      
-                     
+
                     </el-form-item>
                     <el-button type="primary" style="width:100%;margin-bottom:30px;" @click="submitForm('ruleForm')">立即登录</el-button>
                   </el-form>
@@ -53,83 +52,86 @@
   </div>
 </template>
 <script>
-import {mapGetters,mapActions} from 'vuex'
-//时间戳+6位随机数
-var userKey = (new Date()).getTime()+Math.random().toFixed(6).slice(-6);
-var codeimgsrc =  "api/vue/images/captcha?data=" + new Date().getTime()+"&userKey="+userKey;//require("../assets/images/login1.jpeg");
+// eslint-disable-next-line no-unused-vars
+import { mapGetters, mapActions } from 'vuex'
+// 时间戳+6位随机数
+var userKey = (new Date()).getTime() + Math.random().toFixed(6).slice(-6)
+var codeimgsrc = 'vue/images/captcha?data=' + new Date().getTime() + '&userKey=' + userKey// require("../assets/images/login1.jpeg");
 export default {
-  name: "Login",
-  data() {
+  name: 'Login',
+  data () {
     return {
-      codeimgsrc:codeimgsrc,
+      codeimgsrc: codeimgsrc,
       backgroundImage: {
-        backgroundImage: "url(" + require("../assets/images/login1.jpeg") + ")",
-        "text-align": "center",
-        height: "calc(100vh - 123px)",
-        "padding-top": "1px",
-        "margin-top": "-1px",
-        overflow: "hidden",
-        "background-size": "100% 100%"
+        backgroundImage: 'url(' + require('../assets/images/login1.jpeg') + ')',
+        'text-align': 'center',
+        height: 'calc(100vh - 123px)',
+        'padding-top': '1px',
+        'margin-top': '-1px',
+        overflow: 'hidden',
+        'background-size': '100% 100%'
       },
       ruleForm: {
-        username: "",
-        password: "",
-        verifyCode:""
+        username: '',
+        password: '',
+        verifyCode: ''
       },
       rules: {
         username: [
-          { required: true, message: "请输入用户名", trigger: "blur" },
-          { min: 1, max: 50, message: "长度在 1 到 50 个字符", trigger: "blur" }
+          { required: true, message: '请输入用户名', trigger: 'blur' },
+          { min: 1, max: 50, message: '长度在 1 到 50 个字符', trigger: 'blur' }
         ],
         password: [
-          { required: true, message: "请输入密码", trigger: "blur" },
-          { min: 1, max: 50, message: "长度在 1 到 50 个字符", trigger: "blur" }
+          { required: true, message: '请输入密码', trigger: 'blur' },
+          { min: 1, max: 50, message: '长度在 1 到 50 个字符', trigger: 'blur' }
         ],
         verifyCode: [
-          { required: true, message: "请输入验证码", trigger: "blur" },
-          { min: 1, max: 4, message: "长度在 1 到 4 个字符", trigger: "blur" }
+          { required: true, message: '请输入验证码', trigger: 'blur' },
+          { min: 1, max: 4, message: '长度在 1 到 4 个字符', trigger: 'blur' }
         ]
       }
-    };
+    }
   },
   methods: {
-    submitForm(formName) {
+    submitForm (formName) {
       this.$refs[formName].validate(valid => {
-        let param = new URLSearchParams()
+        const param = new URLSearchParams()
         param.append('username', this.ruleForm.username)
-        param.append('password',this.ruleForm.password)
-        param.append('verifyCode',this.ruleForm.verifyCode)
-        param.append('userKey',userKey)
+        param.append('password', this.ruleForm.password)
+        param.append('verifyCode', this.ruleForm.verifyCode)
+        param.append('userKey', userKey)
         if (valid) {
-            this.$http.post('/vue/login',param)
-              .then(response => {
-                console.log(response.data);
-                var data = response.data;
-                if(data.code == 200){
-                  //将人员登录key放入vuex维护
-                  this.$store.dispatch("addUserKey",userKey);
-                  this.$router.push("index");
-                }else{
-                  this.$message.error(data.message);
-                  this.initCode();
-                }
-              })
-              .catch(function(error) {
-                this.$message.error('后台接口调用失败！');
-                this.initCode();
-              });
+          this.$http.post('/vue/login', param)
+            .then(response => {
+              console.log(response.data)
+              var data = response.data
+              // eslint-disable-next-line eqeqeq
+              if (data.code == 200) {
+                // 将人员登录key放入vuex维护
+                this.$store.dispatch('addUserKey', userKey)
+                this.$router.push('index')
+              } else {
+                this.$message.error(data.message)
+                this.initCode()
+              }
+            })
+            // eslint-disable-next-line handle-callback-err
+            .catch(function (error) {
+              this.$message.error('后台接口调用失败！')
+              this.initCode()
+            })
         } else {
-          this.$message.error('提交失败！');
-          return false;
+          this.$message.error('提交失败！')
+          return false
         }
-      });
+      })
     },
-    initCode(){
-      //刷新验证码);
-      this.codeimgsrc="api/vue/images/captcha?data=" + new Date().getTime()+"&userKey="+userKey;
+    initCode () {
+      // 刷新验证码);
+      this.codeimgsrc = 'vue/images/captcha?data=' + new Date().getTime() + '&userKey=' + userKey
     }
   }
-};
+}
 </script>
 
 <style lang="scss" scoped >
@@ -151,4 +153,3 @@ export default {
   width: 100%;
 }
 </style>
-

@@ -34,12 +34,12 @@ module.exports = {
     proxy: {
       // 请求地址  /user/add
       // 代理地址  http://api.xxx.cn/user/add
-      '/api': {
+      '/': {
         ws: true,
         changeOrigin: true,
         target: 'http://192.168.0.164:8080',
         pathRewrite: {
-          '^/api': ''// 这个是定义要访问的路径，代表target，在组件使用中以api代表https://www.toutiao.com
+          '^/': ''// 这个是定义要访问的路径，代表target，在组件使用中以api代表https://www.toutiao.com
         }
       }
     }
