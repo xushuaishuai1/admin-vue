@@ -1,4 +1,5 @@
 module.exports = {
+  runtimeCompiler: true,
   //= >process.env.NODE_ENV：环境变量中存储的是开发环境还是生产环境 基本路径
   publicPath: process.env.NODE_ENV === 'production' ? 'http://www.xxx.cn/' : '/',
   // 输出文件目录,可以自定义
