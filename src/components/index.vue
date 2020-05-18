@@ -1,5 +1,5 @@
 <template>
-  <el-container style="height:calc(100vh);">
+  <el-container>
     <el-aside :style="asidewidth">
       <div class="sidebar-logo-container" title="高校档案系统">
           <img :src="require('../assets/images/logo1.png')"> &nbsp;<span v-show="!isCollapse">高校档案系统</span>
@@ -26,8 +26,8 @@
       <el-header>
         <el-row>
           <el-col :xs="1" :sm="1" :md="1" :lg="1" :xl="1">
-            <span style="float:left;" @click="setIsCollapse">
-              <i class="el-icon-s-fold"></i>
+            <span style="float:left;font-size:20px;" @click="setIsCollapse">
+              <i :class=iconClass></i>
             </span>
           </el-col>
           <el-col :xs="16" :sm="16" :md="16" :lg="16" :xl="16">
@@ -67,7 +67,10 @@
   </el-container>
 </template>
 
-<style>
+<style scoped>
+.el-container{
+  height:calc(100vh)
+}
 .el-header {
   background-color: #333;
   line-height: 60px;
@@ -148,7 +151,8 @@ export default {
       meuns: meuns1,
       menusHead: menusHead,
       width: '200px',
-      nikeName: ''
+      nikeName: '',
+      iconClass: 'el-icon-s-fold'
     }
   },
   mounted: function () {
@@ -171,10 +175,12 @@ export default {
         this.isCollapse = false
         this.asidewidth.width = '200px'
         this.width = '200px'
+        this.iconClass = 'el-icon-s-fold'
       } else {
         this.isCollapse = true
         this.asidewidth.width = '65px'
         this.width = '65px'
+        this.iconClass = 'el-icon-s-unfold'
       }
     },
     initMenuAndUser () {
