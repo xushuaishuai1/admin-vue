@@ -62,7 +62,9 @@
 
       <el-main>
         <transition name="fade">
-          <router-view ></router-view>
+          <div class="pageBlock" >
+            <router-view ></router-view>
+          </div>
         </transition>
       </el-main>
     </el-container>
