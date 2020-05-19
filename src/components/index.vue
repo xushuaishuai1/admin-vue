@@ -61,9 +61,9 @@
       </el-header>
 
       <el-main>
-        <!-- <transition name="el-zoom-in-bottom"> -->
+        <transition name="fade">
           <router-view ></router-view>
-        <!-- </transition> -->
+        </transition>
       </el-main>
     </el-container>
   </el-container>
@@ -101,6 +101,9 @@
   text-align: right;
   font-size: 12px;
   color: #fff;
+}
+.el-main{
+  padding: 5px;
 }
 
 .fade-enter-active, .fade-leave-active {
