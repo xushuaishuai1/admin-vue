@@ -103,7 +103,7 @@
   color: #fff;
 }
 .el-main{
-  padding: 5px;
+  padding: 8px;
 }
 
 .fade-enter-active, .fade-leave-active {
@@ -158,7 +158,7 @@ export default {
         transition: 'width 0.15s'
       },
       rightStyle: {
-        'background-color': '#e0e0e0'
+        'background-color': '#f9f9f9'
       },
       meuns: meuns1,
       menusHead: menusHead,
