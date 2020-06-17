@@ -12,17 +12,17 @@
             <el-row :gutter="15">
               <el-col :span=8>
                 <div class="pageBlock" >
-                <v-chart :options="polar"/>
+                <v-chart1 :options="polar"/>
                 </div>
               </el-col>
               <el-col :span=8>
                 <div class="pageBlock" >
-                <v-chart :options="polar"/>
+                <v-chart2 :options="polar"/>
                 </div>
               </el-col>
               <el-col :span=8>
                 <div class="pageBlock" >
-                <v-chart :options="polar"/>
+                <v-chart3 :options="polar"/>
                 </div>
               </el-col>
             </el-row>
@@ -73,7 +73,9 @@ for (let i = 0; i <= 360; i++) {
 
 export default {
   components: {
-    'v-chart': ECharts
+    'v-chart1': ECharts,
+    'v-chart2': ECharts,
+    'v-chart3': ECharts
   },
   data () {
     return {
