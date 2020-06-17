@@ -8,8 +8,7 @@
         </el-row>
       </el-header>
       <el-main>
-        <transition name="fade">
-            <el-row :gutter="15">
+            <el-row :gutter="15" style="margin-bottom:14px;">
               <el-col :span=8>
                 <div class="pageBlock" >
                 <v-chart1 :options="lcharts"/>
@@ -26,7 +25,23 @@
                 </div>
               </el-col>
             </el-row>
-        </transition>
+            <el-row :gutter="15" style="margin-bottom:14px;">
+              <el-col :span=8>
+                <div class="pageBlock" >
+                <v-chart4 :options="lcharts"/>
+                </div>
+              </el-col>
+              <el-col :span=8>
+                <div class="pageBlock" >
+                <v-chart5 :options="zcharts"/>
+                </div>
+              </el-col>
+              <el-col :span=8>
+                <div class="pageBlock" >
+                <v-chart6 :options="bcharts"/>
+                </div>
+              </el-col>
+            </el-row>
       </el-main>
     </el-container>
 </template>
@@ -42,15 +57,10 @@
   text-align: right;
   font-size: 12px;
 }
-.el-main{
-  padding: 8px;
-  background-color: #fff;
-}
 .pageBlock{
   box-shadow: 0 0 45px rgba(0,0,0,.2);
-  background-color: #fff;
   min-width: calc(30vh);
-  height: calc(50vh);
+  height: calc(44vh);
 }
 .echarts {
   width: 100%;
@@ -67,7 +77,10 @@ export default {
   components: {
     'v-chart1': ECharts,
     'v-chart2': ECharts,
-    'v-chart3': ECharts
+    'v-chart3': ECharts,
+    'v-chart4': ECharts,
+    'v-chart5': ECharts,
+    'v-chart6': ECharts
   },
   data () {
     return {
