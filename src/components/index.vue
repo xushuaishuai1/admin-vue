@@ -9,21 +9,16 @@
       </el-header>
       <el-main>
             <el-row :gutter="15" style="margin-bottom:14px;">
-              <el-col :span=16>
+              <el-col :span=24>
                 <div class="pageBlock1" >
                 <v-chart1 :options="lcharts"/>
-                </div>
-              </el-col>
-              <el-col :span=8>
-                <div class="pageBlock" >
-                <v-chart3 :options="bcharts"/>
                 </div>
               </el-col>
             </el-row>
             <el-row :gutter="15" style="margin-bottom:14px;">
               <el-col :span=8>
                 <div class="pageBlock" >
-                <v-chart4 :options="lcharts"/>
+                <v-chart3 :options="bcharts"/>
                 </div>
               </el-col>
               <el-col :span=16>
@@ -68,69 +63,114 @@ import ECharts from 'vue-echarts'
 import 'echarts/lib/chart/line'
 import 'echarts/lib/component/polar'
 
+var colors = ['#FD2446', '#248EFD', '#C916F2', '#6669B1']// 自定义一个颜色数组，多系时会按照顺序使用自己定义的颜色数组，若不定义则使用默认的颜色数组
+var months = ['1月', '2月', '3月', '4月', '5月', '6月', '7月', '8月', '9月', '10月', '11月', '12月']
+
 export default {
   components: {
     'v-chart1': ECharts,
     'v-chart3': ECharts,
-    'v-chart4': ECharts,
     'v-chart5': ECharts
   },
   data () {
     return {
       lcharts: {
-        title: {
-          text: '折线图堆叠'
+        title: { // 标题，可以自定义标题的位置和样式
+          text: '某地区的、单位数、职工人数、和平均工资'
         },
-        tooltip: {
-          trigger: 'axis'
+        legend: { // 图例，每一个系列独有一个图例，注意：图例的名字必须跟下面series数组里面的name一致。
+          data: ['单位数', '职工数', '平均工资']
         },
-        legend: {
-          data: ['邮件营销', '联盟广告', '视频广告', '直接访问', '搜索引擎']
+        tooltip: { // 鼠标悬浮时的样式，可自定义
+          trigger: 'axis',
+          axisPointer: { // 坐标轴指示器，坐标轴触发有效
+            type: 'cross' // 默认为直线，可选为：'line' | 'shadow'
+          }
         },
-        grid: {
-          left: '3%',
-          right: '4%',
-          bottom: '3%',
-          containLabel: true
+        xAxis: { // x轴的配置
+          data: months
         },
-        xAxis: {
-          type: 'category',
-          boundaryGap: false,
-          data: ['周一', '周二', '周三', '周四', '周五', '周六', '周日']
-        },
-        yAxis: {
-          type: 'value'
-        },
+        yAxis: [
+          { // 第一个y轴位置在左侧
+            position: 'left',
+            type: 'value',
+            name: '单位数',
+            axisLine: {
+              lineStyle: {
+                color: colors[0]
+              }
+            },
+            axisLabel: {
+              formatter: '{value} 个'
+            }
+          },
+          { // 第二个y轴在右侧
+            position: 'right',
+            type: 'value',
+            name: '职工数',
+            axisLine: {
+              lineStyle: {
+                color: colors[1]
+              }
+            },
+            axisLabel: {
+              formatter: '{value} 人'
+            }
+          },
+          { // 第三个y轴也在右侧，距第二个70个像素
+            position: 'right',
+            offset: 70,
+            type: 'value',
+            name: '平均工资',
+            axisLine: {
+              lineStyle: {
+                color: colors[2]
+              }
+            },
+            axisLabel: {
+              formatter: '{value} 万元'
+            }
+          }
+        ],
         series: [
           {
-            name: '邮件营销',
-            type: 'line',
-            stack: '总量',
-            data: [120, 132, 101, 134, 90, 230, 210]
+            name: '单位数',
+            type: 'bar',
+            barMaxWidth: '20%',
+            label: {
+              normal: {
+                show: true,
+                position: 'top'
+              }
+            },
+            yAxisIndex: '0', // 使用第一个y轴，序号从0开始
+            data: [23, 27, 28, 30, 34, 36, 39, 41, 45, 46, 56, 60]
           },
           {
-            name: '联盟广告',
-            type: 'line',
-            stack: '总量',
-            data: [220, 182, 191, 234, 290, 330, 310]
+            name: '职工数',
+            type: 'bar',
+            barMaxWidth: '20%',
+            label: {
+              normal: {
+                show: true,
+                position: 'top'
+              }
+            },
+            yAxisIndex: '1', // 使用第二个y轴
+            data: [1500, 1700, 1750, 1800, 1850, 1900, 1910, 1941, 1980, 2000, 2100, 2200]
           },
           {
-            name: '视频广告',
-            type: 'line',
-            stack: '总量',
-            data: [150, 232, 201, 154, 190, 330, 410]
-          },
-          {
-            name: '直接访问',
-            type: 'line',
-            stack: '总量',
-            data: [320, 332, 301, 334, 390, 330, 320]
-          },
-          {
-            name: '搜索引擎',
-            type: 'line',
-            stack: '总量',
-            data: [820, 932, 901, 934, 1290, 1330, 1320]
+            name: '平均工资',
+            type: 'bar',
+            barMaxWidth: '20%',
+            label: {
+              normal: {
+                show: true,
+                position: 'top'
+              }
+            },
+            yAxisIndex: '2', // 使用第三个y轴
+            data: [3500, 3600, 4200, 4800, 5500, 6500, 4900, 3500, 5400, 5500, 6500, 7000]
           }
         ]
       },
@@ -200,6 +240,13 @@ export default {
   methods: {
     initMenuAndUser () {
       console.log('3333333333333')
+      const param = new URLSearchParams()
+      param.append('statisticalMethod', 'month')
+      this.$http.post('/vue/report/inStorageQuery', param)
+        .then(response => {
+          var data = response.data
+          console.log(data)
+        })
     }
   }
 }
