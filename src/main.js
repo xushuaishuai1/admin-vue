@@ -1,6 +1,10 @@
 /* eslint-disable no-new */
 import Vue from 'vue'
 import App from './App'
+import ECharts from 'vue-echarts' // refers to components/ECharts.vue in webpack
+import 'echarts/lib/chart/bar'
+import 'echarts/lib/component/tooltip'
+import 'echarts-gl'
 import router from './router'// 引入路由配置
 import animate from 'animate.css'// 引入animate
 import ElementUI from 'element-ui'// 引入elementUI
@@ -16,6 +20,7 @@ Vue.use(Loading)// 使用自定义组件
 Vue.config.productionTip = false
 Vue.use(animate)// 使用animate
 Vue.use(ElementUI)// 使用elementui
+Vue.component('v-chart', ECharts)
 
 Vue.prototype.HOST = '/api'
 

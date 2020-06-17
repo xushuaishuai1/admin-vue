@@ -10,7 +10,7 @@
       <el-main>
         <transition name="fade">
           <div class="pageBlock" >
-            <router-view ></router-view>
+            <v-chart :options="polar"/>
           </div>
         </transition>
       </el-main>
@@ -35,13 +35,68 @@
 .pageBlock{
   box-shadow: 0 0 45px rgba(0,0,0,.2);
   background-color: #fff;
+  width: 100%;
+  height: 100%;
+}
+.echarts {
+  width: 100%;
+  height: 100%;
 }
 </style>
 
 <script>
+import ECharts from 'vue-echarts'
+import 'echarts/lib/chart/line'
+import 'echarts/lib/component/polar'
+
+const data = []
+
+for (let i = 0; i <= 360; i++) {
+  const t = i / 180 * Math.PI
+  const r = Math.sin(2 * t) * Math.cos(2 * t)
+  data.push([r, i])
+}
+
 export default {
+  components: {
+    'v-chart': ECharts
+  },
   data () {
     return {
+      polar: {
+        title: {
+          text: '极坐标双数值轴'
+        },
+        legend: {
+          data: ['line']
+        },
+        polar: {
+          center: ['50%', '54%']
+        },
+        tooltip: {
+          trigger: 'axis',
+          axisPointer: {
+            type: 'cross'
+          }
+        },
+        angleAxis: {
+          type: 'value',
+          startAngle: 0
+        },
+        radiusAxis: {
+          min: 0
+        },
+        series: [
+          {
+            coordinateSystem: 'polar',
+            name: 'line',
+            type: 'line',
+            showSymbol: false,
+            data: data
+          }
+        ],
+        animationDuration: 2000
+      }
     }
   },
   mounted: function () {

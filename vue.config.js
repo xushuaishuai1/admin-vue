@@ -12,6 +12,10 @@ module.exports = {
   configureWebpack: {
     plugins: []
   },
+  transpileDependencies: [
+    'vue-echarts',
+    'resize-detector'
+  ],
   //= >直接去修改内置的webpack配置项
   chainWebpack: config => {
     //= >config:原始配置信息对象
