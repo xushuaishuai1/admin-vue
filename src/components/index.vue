@@ -2,16 +2,30 @@
     <el-container>
       <el-header>
         <el-row>
-          <el-col :xs="24" :sm="24" :md="24" :lg="24" :xl="24">
+          <el-col :span=24>
              <el-button type="primary">登录</el-button>
           </el-col>
         </el-row>
       </el-header>
       <el-main>
         <transition name="fade">
-          <div class="pageBlock" >
-            <v-chart :options="polar"/>
-          </div>
+            <el-row :gutter="15">
+              <el-col :span=8>
+                <div class="pageBlock" >
+                <v-chart :options="polar"/>
+                </div>
+              </el-col>
+              <el-col :span=8>
+                <div class="pageBlock" >
+                <v-chart :options="polar"/>
+                </div>
+              </el-col>
+              <el-col :span=8>
+                <div class="pageBlock" >
+                <v-chart :options="polar"/>
+                </div>
+              </el-col>
+            </el-row>
         </transition>
       </el-main>
     </el-container>
@@ -35,8 +49,8 @@
 .pageBlock{
   box-shadow: 0 0 45px rgba(0,0,0,.2);
   background-color: #fff;
-  width: 100%;
-  height: 100%;
+  min-width: calc(30vh);
+  height: calc(50vh);
 }
 .echarts {
   width: 100%;
