@@ -9,14 +9,9 @@
       </el-header>
       <el-main>
             <el-row :gutter="15" style="margin-bottom:14px;">
-              <el-col :span=8>
-                <div class="pageBlock" >
+              <el-col :span=16>
+                <div class="pageBlock1" >
                 <v-chart1 :options="lcharts"/>
-                </div>
-              </el-col>
-              <el-col :span=8>
-                <div class="pageBlock" >
-                <v-chart2 :options="zcharts"/>
                 </div>
               </el-col>
               <el-col :span=8>
@@ -31,14 +26,9 @@
                 <v-chart4 :options="lcharts"/>
                 </div>
               </el-col>
-              <el-col :span=8>
-                <div class="pageBlock" >
+              <el-col :span=16>
+                <div class="pageBlock1" >
                 <v-chart5 :options="zcharts"/>
-                </div>
-              </el-col>
-              <el-col :span=8>
-                <div class="pageBlock" >
-                <v-chart6 :options="bcharts"/>
                 </div>
               </el-col>
             </el-row>
@@ -62,6 +52,11 @@
   min-width: calc(30vh);
   height: calc(44vh);
 }
+.pageBlock1{
+  box-shadow: 0 0 45px rgba(0,0,0,.2);
+  min-width: calc(60vh);
+  height: calc(44vh);
+}
 .echarts {
   width: 100%;
   height: 100%;
@@ -76,11 +71,9 @@ import 'echarts/lib/component/polar'
 export default {
   components: {
     'v-chart1': ECharts,
-    'v-chart2': ECharts,
     'v-chart3': ECharts,
     'v-chart4': ECharts,
-    'v-chart5': ECharts,
-    'v-chart6': ECharts
+    'v-chart5': ECharts
   },
   data () {
     return {
