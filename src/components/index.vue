@@ -63,8 +63,6 @@ import ECharts from 'vue-echarts'
 import 'echarts/lib/chart/line'
 import 'echarts/lib/component/polar'
 
-var months = ['1月', '2月', '3月', '4月', '5月', '6月', '7月', '8月', '9月', '10月', '11月', '12月']
-
 export default {
   components: {
     'v-chart1': ECharts,
@@ -73,79 +71,7 @@ export default {
   },
   data () {
     return {
-      lcharts: {
-        title: { // 标题，可以自定义标题的位置和样式
-          text: '某地区的、单位数、职工人数、和平均工资'
-        },
-        legend: { // 图例，每一个系列独有一个图例，注意：图例的名字必须跟下面series数组里面的name一致。
-          data: ['单位数', '职工数', '平均工资', '平均工资1']
-        },
-        tooltip: { // 鼠标悬浮时的样式，可自定义
-          trigger: 'axis',
-          axisPointer: { // 坐标轴指示器，坐标轴触发有效
-            type: 'cross' // 默认为直线，可选为：'line' | 'shadow'
-          }
-        },
-        xAxis: { // x轴的配置
-          data: months
-        },
-        yAxis: [
-          { // 第一个y轴位置在左侧
-            position: 'left',
-            type: 'value',
-            splitLine: { show: false },
-            name: '单位数',
-            axisLabel: {
-              formatter: '{value} 个'
-            }
-          },
-          { // 第二个y轴在右侧
-            position: 'right',
-            splitLine: { show: false },
-            type: 'value',
-            name: '职工数',
-            axisLabel: {
-              formatter: '{value} 人'
-            }
-          },
-          { // 第三个y轴也在右侧，距第二个70个像素
-            position: 'right',
-            splitLine: { show: false },
-            offset: 70,
-            type: 'value',
-            name: '平均工资',
-            axisLabel: {
-              formatter: '{value} 万元'
-            }
-          }
-        ],
-        series: [
-          {
-            name: '单位数',
-            type: 'bar',
-            yAxisIndex: '0', // 使用第一个y轴，序号从0开始
-            data: [23, 27, 28, 30, 34, 36, 39, 41, 45, 46, 56, 60]
-          },
-          {
-            name: '职工数',
-            type: 'bar',
-            yAxisIndex: '1', // 使用第二个y轴
-            data: [1500, 1700, 1750, 1800, 1850, 1900, 1910, 1941, 1980, 2000, 2100, 2200]
-          },
-          {
-            name: '平均工资',
-            type: 'bar',
-            yAxisIndex: '2', // 使用第三个y轴
-            data: [3500, 3600, 4200, 4800, 5500, 6500, 4900, 3500, 5400, 5500, 6500, 7000]
-          },
-          {
-            name: '平均工资1',
-            type: 'bar',
-            yAxisIndex: '2', // 使用第三个y轴
-            data: [2500, 2600, 2200, 3800, 4500, 6500, 4900, 3500, 5400, 5500, 6500, 7000]
-          }
-        ]
-      },
+      lcharts: {},
       zcharts: {
         legend: {},
         tooltip: {},
@@ -218,6 +144,7 @@ export default {
         .then(response => {
           var data = response.data
           console.log(data)
+          this.lcharts = data
         })
     }
   }
