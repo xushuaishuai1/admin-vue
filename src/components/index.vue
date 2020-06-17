@@ -12,17 +12,17 @@
             <el-row :gutter="15">
               <el-col :span=8>
                 <div class="pageBlock" >
-                <v-chart1 :options="polar"/>
+                <v-chart1 :options="lcharts"/>
                 </div>
               </el-col>
               <el-col :span=8>
                 <div class="pageBlock" >
-                <v-chart2 :options="polar"/>
+                <v-chart2 :options="zcharts"/>
                 </div>
               </el-col>
               <el-col :span=8>
                 <div class="pageBlock" >
-                <v-chart3 :options="polar"/>
+                <v-chart3 :options="bcharts"/>
                 </div>
               </el-col>
             </el-row>
@@ -63,14 +63,6 @@ import ECharts from 'vue-echarts'
 import 'echarts/lib/chart/line'
 import 'echarts/lib/component/polar'
 
-const data = []
-
-for (let i = 0; i <= 360; i++) {
-  const t = i / 180 * Math.PI
-  const r = Math.sin(2 * t) * Math.cos(2 * t)
-  data.push([r, i])
-}
-
 export default {
   components: {
     'v-chart1': ECharts,
@@ -79,39 +71,120 @@ export default {
   },
   data () {
     return {
-      polar: {
+      lcharts: {
         title: {
-          text: '极坐标双数值轴'
-        },
-        legend: {
-          data: ['line']
-        },
-        polar: {
-          center: ['50%', '54%']
+          text: '折线图堆叠'
         },
         tooltip: {
-          trigger: 'axis',
-          axisPointer: {
-            type: 'cross'
-          }
+          trigger: 'axis'
         },
-        angleAxis: {
-          type: 'value',
-          startAngle: 0
+        legend: {
+          data: ['邮件营销', '联盟广告', '视频广告', '直接访问', '搜索引擎']
         },
-        radiusAxis: {
-          min: 0
+        grid: {
+          left: '3%',
+          right: '4%',
+          bottom: '3%',
+          containLabel: true
+        },
+        xAxis: {
+          type: 'category',
+          boundaryGap: false,
+          data: ['周一', '周二', '周三', '周四', '周五', '周六', '周日']
+        },
+        yAxis: {
+          type: 'value'
         },
         series: [
           {
-            coordinateSystem: 'polar',
-            name: 'line',
+            name: '邮件营销',
             type: 'line',
-            showSymbol: false,
-            data: data
+            stack: '总量',
+            data: [120, 132, 101, 134, 90, 230, 210]
+          },
+          {
+            name: '联盟广告',
+            type: 'line',
+            stack: '总量',
+            data: [220, 182, 191, 234, 290, 330, 310]
+          },
+          {
+            name: '视频广告',
+            type: 'line',
+            stack: '总量',
+            data: [150, 232, 201, 154, 190, 330, 410]
+          },
+          {
+            name: '直接访问',
+            type: 'line',
+            stack: '总量',
+            data: [320, 332, 301, 334, 390, 330, 320]
+          },
+          {
+            name: '搜索引擎',
+            type: 'line',
+            stack: '总量',
+            data: [820, 932, 901, 934, 1290, 1330, 1320]
           }
-        ],
-        animationDuration: 2000
+        ]
+      },
+      zcharts: {
+        legend: {},
+        tooltip: {},
+        dataset: {
+          dimensions: ['product', '2015', '2016', '2017'],
+          source: [
+            { product: 'Matcha Latte', 2015: 43.3, 2016: 85.8, 2017: 93.7 },
+            { product: 'Milk Tea', 2015: 83.1, 2016: 73.4, 2017: 55.1 },
+            { product: 'Cheese Cocoa', 2015: 86.4, 2016: 65.2, 2017: 82.5 },
+            { product: 'Walnut Brownie', 2015: 72.4, 2016: 53.9, 2017: 39.1 }
+          ]
+        },
+        xAxis: { type: 'category' },
+        yAxis: {},
+        series: [
+          { type: 'bar' },
+          { type: 'bar' },
+          { type: 'bar' }
+        ]
+      },
+      bcharts: {
+        title: {
+          text: '某站点用户访问来源',
+          subtext: '纯属虚构',
+          left: 'center'
+        },
+        tooltip: {
+          trigger: 'item',
+          formatter: '{a} <br/>{b} : {c} ({d}%)'
+        },
+        legend: {
+          orient: 'vertical',
+          left: 'left',
+          data: ['直接访问', '邮件营销', '联盟广告', '视频广告', '搜索引擎']
+        },
+        series: [
+          {
+            name: '访问来源',
+            type: 'pie',
+            radius: '55%',
+            center: ['50%', '60%'],
+            data: [
+              { value: 335, name: '直接访问' },
+              { value: 310, name: '邮件营销' },
+              { value: 234, name: '联盟广告' },
+              { value: 135, name: '视频广告' },
+              { value: 1548, name: '搜索引擎' }
+            ],
+            emphasis: {
+              itemStyle: {
+                shadowBlur: 10,
+                shadowOffsetX: 0,
+                shadowColor: 'rgba(0, 0, 0, 0.5)'
+              }
+            }
+          }
+        ]
       }
     }
   },
