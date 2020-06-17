@@ -94,6 +94,7 @@ export default {
   },
   methods: {
     submitForm (formName) {
+      this.$router.push('homePage')
       this.$refs[formName].validate(valid => {
         const param = new URLSearchParams()
         param.append('username', this.ruleForm.username)
