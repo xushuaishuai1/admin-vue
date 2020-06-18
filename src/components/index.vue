@@ -236,10 +236,12 @@ export default {
   },
   mounted: function () {
     this.initMenuAndUser()
+    // window.onresize = function temp () {
+    //   console.log(this.lcharts)
+    // }
   },
   methods: {
     initMenuAndUser () {
-      // console.log('3333333333333')
       const param = new URLSearchParams()
       param.append('statisticalMethod', 'month')
       this.$http.post('/vue/report/inStorageQuery', param)
