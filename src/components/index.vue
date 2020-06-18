@@ -1,3 +1,5 @@
+/* eslint-disable use-isnan */
+/* eslint-disable use-isnan */
 <template>
     <el-container>
       <el-header>
@@ -147,7 +149,8 @@ export default {
                 } else if (axisDimension == 'y' && axisIndex == '2') {
                   return formatter1(val)
                 } else {
-                  return val
+                  if (typeof (val) === 'number') return Number(val).toFixed(0)
+                  else return val
                 }
               }
             }
