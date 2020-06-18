@@ -1,156 +1,277 @@
 <template>
-  <div>
     <el-container>
-      <el-header style="width: 100%;height: 60px;line-height: 60px;background-color:white">
-        <div style="cursor: pointer;color: #0BA1DC;font-family: 微软雅黑;font-size:23px;padding-left: 5%;float:left;" >
-          <img :src="require('../assets/images/logo1.png')" style="width:36px;height:24px;margin-bottom:-3px;"/> &nbsp;<span>高校档案系统</span>
-        </div>
-      </el-header>
-      <el-main :style="backgroundImage" id="vue-login">
-        <div class="login-wrap">
-          <el-row>
-            <el-col :xs="12" :sm="12" :md="12" :lg="12" :xl="12">&nbsp;</el-col>
-            <el-col :xs="2" :sm="2" :md="2" :lg="2" :xl="2">&nbsp;</el-col>
-            <el-col :xs="6" :sm="6" :md="6" :lg="6" :xl="6" class="login-div" id="login-div">
-              <div class="layui-form">
-                <div>
-                  <el-form :model="ruleForm" :rules="rules" ref="ruleForm"  autocomplete="on" label-position="left">
-                    <div>
-                      <h3 class="title">用户登录</h3>
-                    </div>
-                    <el-form-item prop="username">
-                      <el-input v-model="ruleForm.username" placeholder="用户名"  prefix-icon="el-icon-user"></el-input>
-                    </el-form-item>
-                    <el-form-item prop="password">
-                      <el-input type="password"  v-model="ruleForm.password" autocomplete="off" placeholder="密码"  prefix-icon="el-icon-lock"></el-input>
-                    </el-form-item>
-                    <el-form-item prop="verifyCode" style="text-align:left;">
-                      <el-row>
-                            <el-col :xs="17" :sm="17" :md="17" :lg="17" :xl="17">
-                                  <el-input  v-model="ruleForm.verifyCode" placeholder="验证码"  prefix-icon="el-icon-s-claim"></el-input>
-                            </el-col>
-                            <el-col :xs="1" :sm="1" :md="1" :lg="1" :xl="1">&nbsp;</el-col>
-                            <el-col :xs="6" :sm="6" :md="6" :lg="6" :xl="6">
-                                  <img class="codeimg" id="codeimg" v-bind:src="codeimgsrc" @click="initCode"/>
-                            </el-col>
-                      </el-row>
-
-                    </el-form-item>
-                    <el-button type="primary" style="width:100%;margin-bottom:30px;" @click="submitForm('ruleForm')">立即登录</el-button>
-                  </el-form>
-                </div>
+      <el-header style="width: 100%;height: 60px;line-height: 60px;">
+        <el-col :span=18>
+              <div style="cursor: pointer;color: #fff;font-family: 微软雅黑;font-size:23px;padding-left: 5%;float:left;" >
+                <img :src="require('../assets/images/logo1.png')" style="width:36px;height:24px;margin-bottom:-3px;"/> &nbsp;<span>高校档案展示界面</span>
               </div>
-            </el-col>
-            <el-col :xs="4" :sm="4" :md="4" :lg="4" :xl="4">&nbsp;</el-col>
-          </el-row>
-        </div>
+          </el-col>
+        <el-col :span=6>
+             <el-button @click="login" size="small" round icon="el-icon-s-promotion">登录系统</el-button>
+          </el-col>
+      </el-header>
+      <el-main>
+            <el-row :gutter="15" style="margin-bottom:14px;">
+              <el-col :span=24>
+                <div class="pageBlock1" >
+                <v-chart1 :options="lcharts"/>
+                </div>
+              </el-col>
+            </el-row>
+            <el-row :gutter="15" style="margin-bottom:14px;">
+              <el-col :span=24>
+                <div class="pageBlock1" >
+                <v-chart5 :options="dcharts"/>
+                </div>
+              </el-col>
+            </el-row>
       </el-main>
-      <el-footer style="width: 100%;height: 60px;line-height: 60px;font-family:宋体;font-size:12px">
-        <center>版权所有©南京远望蓝卫系统集成有限公司1999-2019 苏ICP备11047077号️</center>
-      </el-footer>
     </el-container>
-  </div>
 </template>
+
+<style scoped>
+.el-container{
+  height:calc(100vh);
+  background-color: #fff;
+}
+.el-header {
+  background-color:#348fc6 !important;
+  line-height: 60px;
+  text-align: right;
+  font-size: 12px;
+}
+.pageBlock{
+  box-shadow: 0 0 45px rgba(0,0,0,.2);
+  min-width: calc(30vh);
+  height: calc(44vh);
+}
+.pageBlock1{
+  box-shadow: 0 0 45px rgba(0,0,0,.2);
+  min-width: calc(60vh);
+  height: calc(44vh);
+}
+.echarts {
+  width: 100%;
+  height: 100%;
+}
+</style>
+
 <script>
-// eslint-disable-next-line no-unused-vars
-import { mapGetters, mapActions } from 'vuex'
-// 时间戳+6位随机数
-var userKey = (new Date()).getTime() + Math.random().toFixed(6).slice(-6)
-var codeimgsrc = 'vue/images/captcha?data=' + new Date().getTime() + '&userKey=' + userKey// require("../assets/images/login1.jpeg");
+import ECharts from 'vue-echarts'
+import 'echarts/lib/chart/line'
+import 'echarts/lib/component/polar'
+
+const color = ['#2ec7c9', '#b6a2de', '#5ab1ef', '#ffb980', '#d87a80',
+  '#8d98b3', '#e5cf0d', '#97b552', '#95706d', '#dc69aa',
+  '#07a2a4', '#9a7fd1', '#588dd5', '#f5994e', '#c05050',
+  '#59678c', '#c9ab00', '#7eb00a', '#6f5553', '#c14089']
+
+function formatter (val, index) {
+  var v1 = (val % 60).toFixed(0)
+  var v2 = parseInt(val % 3600 / 60)
+  var v3 = parseInt(val / 3600)
+  v1 = (v1 < 10 ? '0' : '') + v1
+  v2 = (v2 < 10 ? '0' : '') + v2
+  v3 = (v3 < 10 ? '0' : '') + v3
+  return v3 + ':' + v2 + ':' + v1
+}
+
+function formatter1 (val, index) {
+  val = val / (1024 * 1024)
+  return val.toFixed(2) + 'MB'
+}
+
 export default {
-  name: 'Login',
+  components: {
+    'v-chart1': ECharts,
+    'v-chart5': ECharts
+  },
   data () {
     return {
-      codeimgsrc: codeimgsrc,
-      backgroundImage: {
-        backgroundImage: 'url(' + require('../assets/images/login1.jpeg') + ')',
-        'text-align': 'center',
-        height: 'calc(100vh - 123px)',
-        'padding-top': '1px',
-        'margin-top': '-1px',
-        overflow: 'hidden',
-        'background-size': '100% 100%'
-      },
-      ruleForm: {
-        username: '',
-        password: '',
-        verifyCode: ''
-      },
-      rules: {
-        username: [
-          { required: true, message: '请输入用户名', trigger: 'blur' },
-          { min: 1, max: 50, message: '长度在 1 到 50 个字符', trigger: 'blur' }
+      lcharts: {
+        color: color,
+        title: { text: '进库统计柱状图' },
+        yAxis: [
+          {
+            position: 'left',
+            type: 'value',
+            splitLine: {
+              show: false
+            },
+            name: '数量',
+            axisLabel: {
+              formatter: '{value} 个'
+            }
+          },
+          {
+            position: 'right',
+            splitLine: {
+              show: false
+            },
+            type: 'value',
+            name: '时长',
+            axisLabel: {
+              formatter: formatter
+            }
+          },
+          {
+            position: 'right',
+            splitLine: {
+              show: false
+            },
+            offset: 70,
+            type: 'value',
+            name: '大小',
+            axisLabel: {
+              formatter: formatter1
+            }
+          }
         ],
-        password: [
-          { required: true, message: '请输入密码', trigger: 'blur' },
-          { min: 1, max: 50, message: '长度在 1 到 50 个字符', trigger: 'blur' }
+        xAxis: { data: [] },
+        legend: {},
+        series: [],
+        tooltip: {
+          axisPointer: {
+            type: 'cross',
+            label: {
+              formatter: function (params, ticket, callback) {
+                var axisIndex = params.axisIndex
+                var axisDimension = params.axisDimension
+                var val = params.value
+                // eslint-disable-next-line eqeqeq
+                if (axisDimension == 'y' && axisIndex == '1') {
+                  return formatter(val)
+                // eslint-disable-next-line eqeqeq
+                } else if (axisDimension == 'y' && axisIndex == '2') {
+                  return formatter1(val)
+                } else {
+                  if (typeof (val) === 'number') return Number(val).toFixed(0)
+                  else return val
+                }
+              }
+            }
+          },
+          trigger: 'item',
+          formatter: function (params, ticket, callback) {
+            var seriesName = params.seriesName
+            var val = params.data
+            // eslint-disable-next-line eqeqeq
+            if (seriesName == '音频文件时长' || seriesName == '视频文件时长') {
+              return seriesName + ':' + formatter(val)
+            // eslint-disable-next-line eqeqeq
+            } else if (seriesName == '原文大小') {
+              return seriesName + ':' + formatter1(val)
+            } else {
+              return seriesName + ':' + val
+            }
+          }
+        }
+      },
+      dcharts: {
+        color: color,
+        title: { text: '进库统计折线图' },
+        yAxis: [
+          {
+            position: 'left',
+            type: 'value',
+            splitLine: {
+              show: false
+            },
+            name: '数量',
+            axisLabel: {
+              formatter: '{value} 个'
+            }
+          },
+          {
+            position: 'right',
+            splitLine: {
+              show: false
+            },
+            type: 'value',
+            name: '时长',
+            axisLabel: {
+              formatter: formatter
+            }
+          },
+          {
+            position: 'right',
+            splitLine: {
+              show: false
+            },
+            offset: 70,
+            type: 'value',
+            name: '大小',
+            axisLabel: {
+              formatter: formatter1
+            }
+          }
         ],
-        verifyCode: [
-          { required: true, message: '请输入验证码', trigger: 'blur' },
-          { min: 1, max: 4, message: '长度在 1 到 4 个字符', trigger: 'blur' }
-        ]
+        xAxis: { data: [] },
+        legend: {},
+        series: [],
+        tooltip: {
+          axisPointer: {
+            type: 'cross',
+            label: {
+              formatter: function (params, ticket, callback) {
+                var axisIndex = params.axisIndex
+                var axisDimension = params.axisDimension
+                var val = params.value
+                // eslint-disable-next-line eqeqeq
+                if (axisDimension == 'y' && axisIndex == '1') {
+                  return formatter(val)
+                // eslint-disable-next-line eqeqeq
+                } else if (axisDimension == 'y' && axisIndex == '2') {
+                  return formatter1(val)
+                } else {
+                  if (typeof (val) === 'number') return Number(val).toFixed(0)
+                  else return val
+                }
+              }
+            }
+          },
+          trigger: 'item',
+          formatter: function (params, ticket, callback) {
+            var seriesName = params.seriesName
+            var val = params.data
+            // eslint-disable-next-line eqeqeq
+            if (seriesName == '音频文件时长' || seriesName == '视频文件时长') {
+              return seriesName + ':' + formatter(val)
+            // eslint-disable-next-line eqeqeq
+            } else if (seriesName == '原文大小') {
+              return seriesName + ':' + formatter1(val)
+            } else {
+              return seriesName + ':' + val
+            }
+          }
+        }
       }
     }
   },
+  mounted: function () {
+    this.initMenuAndUser()
+    // window.onresize = function temp () {
+    //   console.log(this.lcharts)
+    // }
+  },
   methods: {
-    submitForm (formName) {
-      this.$router.push('homePage')
-      this.$refs[formName].validate(valid => {
-        const param = new URLSearchParams()
-        param.append('username', this.ruleForm.username)
-        param.append('password', this.ruleForm.password)
-        param.append('verifyCode', this.ruleForm.verifyCode)
-        param.append('userKey', userKey)
-        if (valid) {
-          this.$http.post('/vue/login', param)
-            .then(response => {
-              console.log(response.data)
-              var data = response.data
-              // eslint-disable-next-line eqeqeq
-              if (data.code == 200) {
-                // 将人员登录key放入vuex维护
-                this.$store.dispatch('addUserKey', userKey)
-                this.$router.push('homePage')
-              } else {
-                this.$message.error(data.message)
-                this.initCode()
-              }
-            })
-            // eslint-disable-next-line handle-callback-err
-            .catch(function (error) {
-              this.$message.error('后台接口调用失败！')
-              this.initCode()
-            })
-        } else {
-          this.$message.error('提交失败！')
-          return false
-        }
-      })
+    initMenuAndUser () {
+      const param = new URLSearchParams()
+      param.append('statisticalMethod', 'month')
+      this.$http.post('/vue/report/inStorageQuery', param)
+        .then(response => {
+          var data = response.data
+          this.lcharts.xAxis = data.xAxis
+          this.lcharts.legend = data.legend
+          this.lcharts.series = data.series
+          this.dcharts.xAxis = data.xAxis
+          this.dcharts.legend = data.legend
+          this.dcharts.series = data.series1
+        })
     },
-    initCode () {
-      // 刷新验证码);
-      this.codeimgsrc = 'vue/images/captcha?data=' + new Date().getTime() + '&userKey=' + userKey
+    login () {
+      window.open('http://192.168.0.164:8080', 'target')
     }
   }
 }
 </script>
-
-<style lang="scss" scoped >
-.grid-content {
-  border-radius: 4px;
-  min-height: 36px;
-}
-.title{
-  color: #0BA1DC;
-  font-family: serif;
-  font-size:24px;
-  text-align:left;
-}
-.codeimg{
-  height: 40px;
-  line-height: 40px;
-  margin-right: 1px;
-  border: none;
-  width: 100%;
-}
-</style>
