@@ -1,5 +1,3 @@
-/* eslint-disable use-isnan */
-/* eslint-disable use-isnan */
 <template>
     <el-container>
       <el-header>
