@@ -71,7 +71,87 @@ export default {
   },
   data () {
     return {
-      lcharts: {},
+      lcharts: {
+        yAxis: [
+          {
+            position: 'left',
+            type: 'value',
+            splitLine: {
+              show: false
+            },
+            name: '数量',
+            axisLabel: {
+              formatter: '{value} 个'
+            }
+          },
+          {
+            position: 'right',
+            splitLine: {
+              show: false
+            },
+            type: 'value',
+            name: '时长',
+            axisLabel: {
+              formatter: function (val, index) {
+                var v1 = val % 60
+                var v2 = parseInt(val % 3600 / 60)
+                var v3 = parseInt(val / 3600)
+                v1 = (v1 < 10 ? '0' : '') + v1
+                v2 = (v2 < 10 ? '0' : '') + v2
+                v3 = (v3 < 10 ? '0' : '') + v3
+
+                return v3 + ':' + v2 + ':' + v1
+              }
+            }
+          },
+          {
+            position: 'right',
+            splitLine: {
+              show: false
+            },
+            offset: 70,
+            type: 'value',
+            name: '大小',
+            axisLabel: {
+              formatter: function (val, index) {
+                val = val / (1024 * 1024)
+                return val.toFixed(2) + 'MB'
+              }
+            }
+          }
+        ],
+        xAxis: { data: [] },
+        legend: {},
+        series: [],
+        tooltip: {
+          axisPointer: {
+            type: 'cross'
+          },
+          trigger: 'item',
+          formatter: function (params, ticket, callback) {
+            var seriesName = params.seriesName
+            var val = params.data
+            // eslint-disable-next-line eqeqeq
+            if (seriesName == '音频文件时长' || seriesName == '视频文件时长') {
+              var v1 = val % 60
+              var v2 = parseInt(val % 3600 / 60)
+              var v3 = parseInt(val / 3600)
+              v1 = (v1 < 10 ? '0' : '') + v1
+              v2 = (v2 < 10 ? '0' : '') + v2
+              v3 = (v3 < 10 ? '0' : '') + v3
+
+              return seriesName + ':' + v3 + ':' + v2 + ':' + v1
+            // eslint-disable-next-line eqeqeq
+            } else if (seriesName == '原文大小') {
+              val = val / (1024 * 1024)
+              return seriesName + ':' + val.toFixed(2) + 'MB'
+            } else {
+              return seriesName + ':' + val
+            }
+          }
+        },
+        title: {}
+      },
       zcharts: {
         legend: {},
         tooltip: {},
@@ -137,14 +217,16 @@ export default {
   },
   methods: {
     initMenuAndUser () {
-      console.log('3333333333333')
+      // console.log('3333333333333')
       const param = new URLSearchParams()
       param.append('statisticalMethod', 'month')
       this.$http.post('/vue/report/inStorageQuery', param)
         .then(response => {
           var data = response.data
-          console.log(data)
-          this.lcharts = data
+          this.lcharts.xAxis = data.xAxis
+          this.lcharts.legend = data.legend
+          this.lcharts.series = data.series
+          this.lcharts.title = data.title
         })
     }
   }
