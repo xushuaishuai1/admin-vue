@@ -63,6 +63,26 @@ import ECharts from 'vue-echarts'
 import 'echarts/lib/chart/line'
 import 'echarts/lib/component/polar'
 
+const color = ['#2ec7c9', '#b6a2de', '#5ab1ef', '#ffb980', '#d87a80',
+  '#8d98b3', '#e5cf0d', '#97b552', '#95706d', '#dc69aa',
+  '#07a2a4', '#9a7fd1', '#588dd5', '#f5994e', '#c05050',
+  '#59678c', '#c9ab00', '#7eb00a', '#6f5553', '#c14089']
+
+function formatter (val, index) {
+  var v1 = val % 60
+  var v2 = parseInt(val % 3600 / 60)
+  var v3 = parseInt(val / 3600)
+  v1 = (v1 < 10 ? '0' : '') + v1
+  v2 = (v2 < 10 ? '0' : '') + v2
+  v3 = (v3 < 10 ? '0' : '') + v3
+  return v3 + ':' + v2 + ':' + v1
+}
+
+function formatter1 (val, index) {
+  val = val / (1024 * 1024)
+  return val.toFixed(2) + 'MB'
+}
+
 export default {
   components: {
     'v-chart1': ECharts,
@@ -72,6 +92,7 @@ export default {
   data () {
     return {
       lcharts: {
+        color: color,
         yAxis: [
           {
             position: 'left',
@@ -92,16 +113,7 @@ export default {
             type: 'value',
             name: '时长',
             axisLabel: {
-              formatter: function (val, index) {
-                var v1 = val % 60
-                var v2 = parseInt(val % 3600 / 60)
-                var v3 = parseInt(val / 3600)
-                v1 = (v1 < 10 ? '0' : '') + v1
-                v2 = (v2 < 10 ? '0' : '') + v2
-                v3 = (v3 < 10 ? '0' : '') + v3
-
-                return v3 + ':' + v2 + ':' + v1
-              }
+              formatter: formatter
             }
           },
           {
@@ -113,10 +125,7 @@ export default {
             type: 'value',
             name: '大小',
             axisLabel: {
-              formatter: function (val, index) {
-                val = val / (1024 * 1024)
-                return val.toFixed(2) + 'MB'
-              }
+              formatter: formatter1
             }
           }
         ],
@@ -133,18 +142,10 @@ export default {
             var val = params.data
             // eslint-disable-next-line eqeqeq
             if (seriesName == '音频文件时长' || seriesName == '视频文件时长') {
-              var v1 = val % 60
-              var v2 = parseInt(val % 3600 / 60)
-              var v3 = parseInt(val / 3600)
-              v1 = (v1 < 10 ? '0' : '') + v1
-              v2 = (v2 < 10 ? '0' : '') + v2
-              v3 = (v3 < 10 ? '0' : '') + v3
-
-              return seriesName + ':' + v3 + ':' + v2 + ':' + v1
+              return seriesName + ':' + formatter
             // eslint-disable-next-line eqeqeq
             } else if (seriesName == '原文大小') {
-              val = val / (1024 * 1024)
-              return seriesName + ':' + val.toFixed(2) + 'MB'
+              return seriesName + ':' + formatter1
             } else {
               return seriesName + ':' + val
             }
@@ -153,6 +154,7 @@ export default {
         title: {}
       },
       zcharts: {
+        color: color,
         legend: {},
         tooltip: {},
         dataset: {
@@ -173,6 +175,7 @@ export default {
         ]
       },
       bcharts: {
+        color: color,
         title: {
           text: '某站点用户访问来源',
           subtext: '纯属虚构',
