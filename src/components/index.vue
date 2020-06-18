@@ -69,7 +69,7 @@ const color = ['#2ec7c9', '#b6a2de', '#5ab1ef', '#ffb980', '#d87a80',
   '#59678c', '#c9ab00', '#7eb00a', '#6f5553', '#c14089']
 
 function formatter (val, index) {
-  var v1 = val % 60
+  var v1 = (val % 60).toFixed(0)
   var v2 = parseInt(val % 3600 / 60)
   var v3 = parseInt(val / 3600)
   v1 = (v1 < 10 ? '0' : '') + v1
@@ -134,7 +134,23 @@ export default {
         series: [],
         tooltip: {
           axisPointer: {
-            type: 'cross'
+            type: 'cross',
+            label: {
+              formatter: function (params, ticket, callback) {
+                var axisIndex = params.axisIndex
+                var axisDimension = params.axisDimension
+                var val = params.value
+                // eslint-disable-next-line eqeqeq
+                if (axisDimension == 'y' && axisIndex == '1') {
+                  return formatter(val)
+                // eslint-disable-next-line eqeqeq
+                } else if (axisDimension == 'y' && axisIndex == '2') {
+                  return formatter1(val)
+                } else {
+                  return val
+                }
+              }
+            }
           },
           trigger: 'item',
           formatter: function (params, ticket, callback) {
@@ -142,10 +158,10 @@ export default {
             var val = params.data
             // eslint-disable-next-line eqeqeq
             if (seriesName == '音频文件时长' || seriesName == '视频文件时长') {
-              return seriesName + ':' + formatter
+              return seriesName + ':' + formatter(val)
             // eslint-disable-next-line eqeqeq
             } else if (seriesName == '原文大小') {
-              return seriesName + ':' + formatter1
+              return seriesName + ':' + formatter1(val)
             } else {
               return seriesName + ':' + val
             }
