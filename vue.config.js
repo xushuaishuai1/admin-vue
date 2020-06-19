@@ -31,7 +31,7 @@ module.exports = {
   //= >修改webpack-dev-server配置（尤其是跨域代理）
   devServer: {
     port: 8081, // 端口号
-    host: 'localhost',
+    host: '0.0.0.0',
     https: false,
     open: true, // 配置自动启动浏览器
     hotOnly: false,

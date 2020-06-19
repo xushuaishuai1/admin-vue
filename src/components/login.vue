@@ -32,21 +32,24 @@
 <style scoped>
 .el-container{
   height:calc(100vh);
-  background-color: #fff;
+  background-color:black;
+  box-shadow: 0 0 45px white;
 }
 .el-header {
-  background-color:#348fc6 !important;
+  background-color:black;
   line-height: 60px;
   text-align: right;
   font-size: 12px;
+  height: 64px;
+  opacity: 0.8;
 }
 .pageBlock{
-  box-shadow: 0 0 45px rgba(0,0,0,.2);
+  box-shadow: 0 0 45px white;
   min-width: calc(30vh);
   height: calc(44vh);
 }
 .pageBlock1{
-  box-shadow: 0 0 45px rgba(0,0,0,.2);
+  box-shadow: 0 0 45px white;
   min-width: calc(60vh);
   height: calc(44vh);
 }
@@ -90,7 +93,7 @@ export default {
     return {
       lcharts: {
         color: color,
-        title: { text: '进库统计柱状图' },
+        title: { text: '进库统计柱状图', textStyle: { color: '#fff' } },
         yAxis: [
           {
             position: 'left',
@@ -99,8 +102,10 @@ export default {
               show: false
             },
             name: '数量',
+            nameTextStyle: { color: '#fff' },
             axisLabel: {
-              formatter: '{value} 个'
+              formatter: '{value} 个',
+              color: '#fff'
             }
           },
           {
@@ -110,8 +115,10 @@ export default {
             },
             type: 'value',
             name: '时长',
+            nameTextStyle: { color: '#fff' },
             axisLabel: {
-              formatter: formatter
+              formatter: formatter,
+              color: '#fff'
             }
           },
           {
@@ -122,8 +129,10 @@ export default {
             offset: 70,
             type: 'value',
             name: '大小',
+            nameTextStyle: { color: '#fff' },
             axisLabel: {
-              formatter: formatter1
+              formatter: formatter1,
+              color: '#fff'
             }
           }
         ],
@@ -169,7 +178,7 @@ export default {
       },
       dcharts: {
         color: color,
-        title: { text: '进库统计折线图' },
+        title: { text: '进库统计折线图', textStyle: { color: '#fff' } },
         yAxis: [
           {
             position: 'left',
@@ -178,8 +187,10 @@ export default {
               show: false
             },
             name: '数量',
+            nameTextStyle: { color: '#fff' },
             axisLabel: {
-              formatter: '{value} 个'
+              formatter: '{value} 个',
+              color: '#fff'
             }
           },
           {
@@ -189,8 +200,10 @@ export default {
             },
             type: 'value',
             name: '时长',
+            nameTextStyle: { color: '#fff' },
             axisLabel: {
-              formatter: formatter
+              formatter: formatter,
+              color: '#fff'
             }
           },
           {
@@ -201,8 +214,10 @@ export default {
             offset: 70,
             type: 'value',
             name: '大小',
+            nameTextStyle: { color: '#fff' },
             axisLabel: {
-              formatter: formatter1
+              formatter: formatter1,
+              color: '#fff'
             }
           }
         ],
