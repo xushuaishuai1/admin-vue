@@ -1,6 +1,6 @@
 <template>
     <el-container>
-      <el-header style="width: 100%;height: 60px;line-height: 60px;">
+      <el-header>
         <el-col :span=18>
               <div style="cursor: pointer;color: #fff;font-family: 微软雅黑;font-size:23px;padding-left: 5%;float:left;" >
                 <img :src="require('../assets/images/logo1.png')" style="width:36px;height:24px;margin-bottom:-3px;"/> &nbsp;<span>高校档案展示界面</span>
@@ -11,16 +11,48 @@
           </el-col>
       </el-header>
       <el-main>
-            <el-row :gutter="15" style="margin-bottom:14px;">
-              <el-col :span=24>
+            <el-row :gutter="20" style="margin-bottom:10px;">
+              <el-col :span=4 >
                 <div class="pageBlock1" >
+                 馆藏档案总计：<span class="countClass">{{total}}</span>
+                </div>
+              </el-col>
+              <el-col :span=4 >
+                <div class="pageBlock1" >
+                 档案分类数：<span class="countClass">{{classifyTotal}}</span>
+                </div>
+              </el-col>
+              <el-col :span=4 >
+                <div class="pageBlock1" >
+                 系统内借阅总次数：<span class="countClass">{{xborrowTotal}}</span>
+                </div>
+              </el-col>
+              <el-col :span=4 >
+                <div class="pageBlock1" >
+                 远程借阅总次数：<span class="countClass">{{yborrowTotal}}</span>
+                </div>
+              </el-col>
+              <el-col :span=4 >
+                <div class="pageBlock1" >
+                 编研总次数：<span class="countClass">{{publishTotal}}</span>
+                </div>
+              </el-col>
+              <el-col :span=4 >
+                <div class="pageBlock1" >
+                 发布总次数：<span class="countClass">{{cTotal}}</span>
+                </div>
+              </el-col>
+            </el-row>
+            <el-row :gutter="15" style="margin-bottom:10px;">
+              <el-col :span=24>
+                <div class="pageBlock2" >
                 <v-chart1 :options="lcharts"/>
                 </div>
               </el-col>
             </el-row>
-            <el-row :gutter="15" style="margin-bottom:14px;">
+            <el-row :gutter="15" style="margin-bottom:10px;">
               <el-col :span=24>
-                <div class="pageBlock1" >
+                <div class="pageBlock2" >
                 <v-chart5 :options="dcharts"/>
                 </div>
               </el-col>
@@ -37,25 +69,33 @@
 }
 .el-header {
   background-color:black;
-  line-height: 60px;
   text-align: right;
   font-size: 12px;
-  height: 64px;
   opacity: 0.8;
-}
-.pageBlock{
-  box-shadow: 0 0 45px white;
-  min-width: calc(30vh);
-  height: calc(44vh);
+  height: 60px;
+  line-height: 60px;
 }
 .pageBlock1{
   box-shadow: 0 0 45px white;
+  height: 60px;
+  line-height: 60px;
+  color:#fff;
+  text-align: center;
+  border-radius: 20%;
+}
+.pageBlock2{
+  box-shadow: 0 0 45px white;
   min-width: calc(60vh);
-  height: calc(44vh);
+  height: calc(37vh);
 }
 .echarts {
   width: 100%;
   height: 100%;
+}
+.countClass{
+  color:#d68b91;
+  font-weight: 500;
+  font-size: 28px !important;
 }
 </style>
 
@@ -91,6 +131,12 @@ export default {
   },
   data () {
     return {
+      total: 0,
+      classifyTotal: 0,
+      xborrowTotal: 0,
+      yborrowTotal: 0,
+      publishTotal: 0,
+      cTotal: 0,
       lcharts: {
         color: color,
         title: { text: '进库统计柱状图', textStyle: { color: '#fff' } },
@@ -264,13 +310,14 @@ export default {
     }
   },
   mounted: function () {
-    this.initMenuAndUser()
+    this.inStorageQuery()
+    this.getCount()
     // window.onresize = function temp () {
     //   console.log(this.lcharts)
     // }
   },
   methods: {
-    initMenuAndUser () {
+    inStorageQuery () {
       const param = new URLSearchParams()
       param.append('statisticalMethod', 'month')
       this.$http.post('/vue/report/inStorageQuery', param)
@@ -282,6 +329,20 @@ export default {
           this.dcharts.xAxis = data.xAxis
           this.dcharts.legend = data.legend
           this.dcharts.series = data.series1
+        })
+    },
+    getCount () {
+      const param = new URLSearchParams()
+      param.append('statisticalMethod', 'month')
+      this.$http.post('/vue/report/getCount', param)
+        .then(response => {
+          var data = response.data
+          this.total = data.total
+          this.classifyTotal = data.classifyTotal
+          this.xborrowTotal = data.xborrowTotal
+          this.yborrowTotal = data.yborrowTotal
+          this.publishTotal = data.publishTotal
+          this.cTotal = data.cTotal
         })
     },
     login () {
