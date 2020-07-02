@@ -41,7 +41,7 @@ module.exports = {
       '/': {
         ws: true,
         changeOrigin: true,
-        target: 'http://localhost:8080',
+        target: 'http://139.159.160.28:8080',
         pathRewrite: {
           '^/': ''// 这个是定义要访问的路径，代表target，在组件使用中以api代表https://www.toutiao.com
         }

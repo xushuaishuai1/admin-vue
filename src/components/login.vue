@@ -346,7 +346,7 @@ export default {
         })
     },
     login () {
-      window.open('http://192.168.0.164:8080', 'target')
+      window.open('http://139.159.160.28:8080', 'target')
     }
   }
 }
