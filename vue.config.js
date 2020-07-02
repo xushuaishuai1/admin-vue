@@ -1,7 +1,8 @@
 module.exports = {
   runtimeCompiler: true,
   //= >process.env.NODE_ENV：环境变量中存储的是开发环境还是生产环境 基本路径
-  publicPath: process.env.NODE_ENV === 'production' ? 'http://www.xxx.cn/' : '/',
+  // publicPath: process.env.NODE_ENV === 'production' ? 'http://www.xxx.cn/' : '/',
+  publicPath: process.env.NODE_ENV === 'production' ? './' : '/',
   // 输出文件目录,可以自定义
   outputDir: 'dist',
   //= >自定义目录名称，把生成的JS/CSS/图片等静态资源放置到这个目录中
@@ -38,12 +39,12 @@ module.exports = {
     proxy: {
       // 请求地址  /user/add
       // 代理地址  http://api.xxx.cn/user/add
-      '/': {
-        ws: true,
+      '/vue': {
+        target: 'http://127.0.0.1:8070',
         changeOrigin: true,
-        target: 'http://139.159.160.28:8080',
+        ws: true,
         pathRewrite: {
-          '^/': ''// 这个是定义要访问的路径，代表target，在组件使用中以api代表https://www.toutiao.com
+          '^/vue': ''// 这个是定义要访问的路径，代表target，在组件使用中以api代表https://www.toutiao.com
         }
       }
     }
